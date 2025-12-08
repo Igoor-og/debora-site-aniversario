@@ -1,0 +1,6 @@
+<section class="gallery ios-card fade">
+    <h2>Nossas Fotos</h2>
+    <div class="grid">
+        <img src="assets/photo1.jpg" alt="foto" />
+        </div>
+</section>
