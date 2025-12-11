@@ -197,24 +197,72 @@ h2 {
     text-align: left;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+/* --- GALERIA (Atualizado para Carrossel Swiper) --- */
+.gallery h2 {
+    /* Mantém o seu estilo, mas garanta que o padding-left seja consistente */
+    margin-bottom: 20px;
+    padding-left: 10px;
+    text-align: left;
+}
+
+/* Remova as regras antigas:
+.grid { ... }
+.grid img { ... }
+.grid img:hover { ... }
+*/
+
+/* --- NOVAS REGRAS PARA O CARROSSEL (COLE NO FINAL DO SEU STYLE.CSS) --- */
+
+/* Contêiner principal do Swiper */
+.swiper.mySwiper {
+    width: 100%;
+    height: 350px; /* Altura que define o tamanho do carrossel */
+    padding-bottom: 30px;
     margin-top: 25px;
 }
 
-.grid img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s;
+/* Estilo de cada slide individual */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.4s ease;
 }
 
-.grid img:hover {
-    transform: scale(1.02);
+/* Imagem dentro do slide */
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a foto preencha o slide */
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.swiper-slide img.swiper-lazy-loaded {
+    opacity: 1;
+}
+
+/* --- ESTILO DOS CONTROLES --- */
+:root {
+    /* Define a cor dos botões e paginação como seu accent color */
+    --swiper-theme-color: var(--ios-accent);
+}
+
+/* Opcional: Estilo das setas */
+.swiper-button-next,
+.swiper-button-prev {
+    opacity: 0.8;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 20px !important;
+    font-weight: bold;
 }
 
 /* --- CARTA --- */

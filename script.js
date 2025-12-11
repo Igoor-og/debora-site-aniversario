@@ -105,3 +105,64 @@ document.addEventListener(
   },
   { once: true },
 );
+document.addEventListener("DOMContentLoaded", () => {
+  // A Lógica do carrossel deve ser executada após o DOM estar pronto
+
+  const carouselWrapper = document.getElementById("carousel-wrapper");
+  const totalPhotos = 104; // NÚMERO TOTAL DE FOTOS
+
+  // 1. Geração Automática dos Slides
+  if (carouselWrapper) {
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 1; i <= totalPhotos; i++) {
+      const slide = document.createElement("div");
+      slide.classList.add("swiper-slide");
+
+      const img = document.createElement("img");
+      // *** MUDANÇA CRUCIAL: Usamos SRC em vez de DATA-SRC ***
+      img.setAttribute("src", `assets/photo${i}.jpg`); // *** VERIFIQUE A EXTENSÃO ***
+
+      // NÃO USAMOS MAIS: img.classList.add("swiper-lazy");
+
+      // NÃO CRIAMOS MAIS O PRELOADER
+      // const preloader = document.createElement("div");
+
+      img.alt = `Momento nosso ${i}`;
+
+      slide.appendChild(img);
+      // slide.appendChild(preloader); // REMOVEMOS O PRELOADER
+      fragment.appendChild(slide);
+    }
+
+    carouselWrapper.appendChild(fragment);
+
+    // 2. Inicialização do Swiper com Configurações Responsivas
+    new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      loop: true,
+
+      // *** MUDANÇA CRUCIAL: REMOVER O MÓDULO LAZY ***
+      // lazy: { loadPrevNext: true, },
+
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1.2,
+        },
+        1024: {
+          slidesPerView: 1.5,
+        },
+      },
+    });
+  }
+});
