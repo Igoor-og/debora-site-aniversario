@@ -27,7 +27,17 @@
     --shadow: var(--shadow-light);
     --footer-bg: var(--footer-bg-light);
 }
-
+/* --- NOVO ESTILO: Botão com Cor de Destaque (Rosa) --- */
+.ios-accent-button {
+    /* Define o fundo usando a variável de destaque que muda com o Dark Mode */
+    background: var(--accent);
+    color: white;
+    /* Opções de padding mais sutil para o rodapé */
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
 /* --- MODO ESCURO (Dark Mode) --- */
 body.theme-dark {
     --bg: var(--bg-dark);
@@ -191,56 +201,58 @@ h2 {
 }
 
 /* --- GALERIA --- */
-.gallery h2 {
+
+.gallery {
     margin-bottom: 20px;
     padding-left: 10px;
     text-align: left;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
 }
 
-/* --- GALERIA (Atualizado para Carrossel Swiper) --- */
-.gallery h2 {
-    /* Mantém o seu estilo, mas garanta que o padding-left seja consistente */
-    margin-bottom: 20px;
-    padding-left: 10px;
-    text-align: left;
-}
-
-/* Remova as regras antigas:
-.grid { ... }
-.grid img { ... }
-.grid img:hover { ... }
-*/
-
-/* --- NOVAS REGRAS PARA O CARROSSEL (COLE NO FINAL DO SEU STYLE.CSS) --- */
-
-/* Contêiner principal do Swiper */
 .swiper.mySwiper {
-    width: 100%;
-    height: 350px; /* Altura que define o tamanho do carrossel */
-    padding-bottom: 30px;
-    margin-top: 25px;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    margin: 30px auto;
+    padding-bottom: 40px;
+    overflow: visible;
 }
 
-/* Estilo de cada slide individual */
+/* 2. Estilo de cada slide individual (Onde definimos o formato) */
 .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
     background: var(--card-bg);
-    border-radius: 12px;
+    border-radius: 20px; /* Arredondamento um pouco maior fica mais bonito no quadrado */
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.4s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais suave */
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    aspect-ratio: 1 / 1;
+
+    /* DICA: Se você tiver muitas fotos "em pé" (retrato) e o quadrado ainda estiver
+       cortando muito o topo/base, troque a linha acima por:
+       aspect-ratio: 4 / 5;  (Formato retrato estilo Instagram)
+    */
 }
 
-/* Imagem dentro do slide */
+/* 3. Imagem dentro do slide */
 .swiper-slide img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a foto preencha o slide */
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
+    /*
+       object-fit: cover; -> Preenche todo o quadrado. Fica mais bonito, mas corta as bordas se a foto não for quadrada.
+       object-fit: contain; -> Mostra a foto INTEIRA sem cortar nada, mas pode sobrar espaço vazio dentro do quadrado.
+       Sugiro manter 'cover' para ficar mais elegante, o formato quadrado já reduzirá muito os cortes.
+    */
+    object-fit: cover;
+    opacity: 1;
+    border-radius: 20px; /* Garante que a imagem siga o arredondamento do card */
 }
 
 .swiper-slide img.swiper-lazy-loaded {
@@ -283,7 +295,7 @@ h2 {
 
 /* --- BOTÃO iOS --- */
 .ios-button {
-    background: var(--ios-secondary);
+    background: var(--accent);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -300,14 +312,6 @@ h2 {
 .ios-button:active {
     transform: scale(0.98);
     opacity: 0.85;
-}
-
-/* Posicionamento do botão de tema */
-#themeToggle {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
 }
 
 /* --- RODAPÉ (com BLUR) --- */

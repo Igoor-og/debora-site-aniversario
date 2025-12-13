@@ -35,7 +35,8 @@ function updateCountdown() {
     if (lockScreen) {
       lockScreen.classList.add("hidden");
     }
-    countdownTimeDisplay.innerHTML = "É HOJE!";
+    countdownTimeDisplay.innerHTML = "É HOJE!"; // 🔑 CHAMA O SWIPER SOMENTE AO DESBLOQUEAR
+    initializeSwiper();
   } else {
     // Bloqueio ativo: Atualiza o tempo.
     countdownTimeDisplay.innerHTML = `${days} dias ${format(hours)}:${format(minutes)}:${format(seconds)}`;
@@ -45,21 +46,80 @@ function updateCountdown() {
   }
 }
 
+// =========================================================
+// NOVO BLOCO: INICIALIZAÇÃO DO SWIPER
+// =========================================================
+
+function initializeSwiper() {
+  // Garante que o Swiper só inicialize uma vez
+  if (document.querySelector(".mySwiper").swiper) return;
+
+  const carouselWrapper = document.getElementById("carousel-wrapper");
+  const totalPhotos = 104; // NÚMERO TOTAL DE FOTOS
+  // 1. Geração Automática dos Slides
+
+  if (carouselWrapper) {
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 1; i <= totalPhotos; i++) {
+      const slide = document.createElement("div");
+      slide.classList.add("swiper-slide");
+
+      const img = document.createElement("img"); // Usa SRC para carregamento imediato (sem lazy loading, conforme configuração)
+      img.setAttribute("src", `assets/photo${i}.JPG`);
+
+      img.alt = `Momento nosso ${i}`;
+
+      slide.appendChild(img);
+      fragment.appendChild(slide);
+    }
+
+    carouselWrapper.appendChild(fragment); // 2. Inicialização do Swiper com Configurações
+
+    new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      loop: true,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1.2,
+        },
+        1024: {
+          slidesPerView: 1.5,
+        },
+      },
+    });
+  }
+}
+
 function initializeApp() {
   // 1. Lógica do Modo DEV
   if (isDevMode) {
     console.log("Modo DEV ativado. Desbloqueando a página.");
     if (lockScreen) {
       lockScreen.classList.add("hidden");
-    }
-    // Não inicia o contador, resolvendo o bug de conflito.
+    } // 🔑 NOVO: Inicializa o Swiper imediatamente no modo DEV
+    initializeSwiper();
   } else {
     // 2. Lógica do Contador Regressivo (Modo Normal)
     updateCountdown(); // Chama uma vez para inicializar o display
     countdownInterval = setInterval(updateCountdown, 1000); // Inicia o loop
-  }
+  } // 3. Inicializa Tema (Dark/Light)
 
-  // 3. Inicializa Tema (Dark/Light)
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("theme-dark");
   }
@@ -105,64 +165,5 @@ document.addEventListener(
   },
   { once: true },
 );
-document.addEventListener("DOMContentLoaded", () => {
-  // A Lógica do carrossel deve ser executada após o DOM estar pronto
 
-  const carouselWrapper = document.getElementById("carousel-wrapper");
-  const totalPhotos = 104; // NÚMERO TOTAL DE FOTOS
-
-  // 1. Geração Automática dos Slides
-  if (carouselWrapper) {
-    const fragment = document.createDocumentFragment();
-
-    for (let i = 1; i <= totalPhotos; i++) {
-      const slide = document.createElement("div");
-      slide.classList.add("swiper-slide");
-
-      const img = document.createElement("img");
-      // *** MUDANÇA CRUCIAL: Usamos SRC em vez de DATA-SRC ***
-      img.setAttribute("src", `assets/photo${i}.jpg`); // *** VERIFIQUE A EXTENSÃO ***
-
-      // NÃO USAMOS MAIS: img.classList.add("swiper-lazy");
-
-      // NÃO CRIAMOS MAIS O PRELOADER
-      // const preloader = document.createElement("div");
-
-      img.alt = `Momento nosso ${i}`;
-
-      slide.appendChild(img);
-      // slide.appendChild(preloader); // REMOVEMOS O PRELOADER
-      fragment.appendChild(slide);
-    }
-
-    carouselWrapper.appendChild(fragment);
-
-    // 2. Inicialização do Swiper com Configurações Responsivas
-    new Swiper(".mySwiper", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      loop: true,
-
-      // *** MUDANÇA CRUCIAL: REMOVER O MÓDULO LAZY ***
-      // lazy: { loadPrevNext: true, },
-
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 1.2,
-        },
-        1024: {
-          slidesPerView: 1.5,
-        },
-      },
-    });
-  }
-});
+// Remove o bloco DOMContentLoaded antigo do Swiper
