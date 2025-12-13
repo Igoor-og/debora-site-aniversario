@@ -66,7 +66,7 @@ function initializeSwiper() {
       slide.classList.add("swiper-slide");
 
       const img = document.createElement("img"); // Usa SRC para carregamento imediato (sem lazy loading, conforme configuração)
-      img.setAttribute("src", `assets/photo${i}.JPG`);
+      img.setAttribute("src", `assets/photo${i}.jpg`);
 
       img.alt = `Momento nosso ${i}`;
 

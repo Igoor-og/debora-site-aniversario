@@ -27,17 +27,6 @@
     --shadow: var(--shadow-light);
     --footer-bg: var(--footer-bg-light);
 }
-/* --- NOVO ESTILO: Botão com Cor de Destaque (Rosa) --- */
-.ios-accent-button {
-    /* Define o fundo usando a variável de destaque que muda com o Dark Mode */
-    background: var(--accent);
-    color: white;
-    /* Opções de padding mais sutil para o rodapé */
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
 /* --- MODO ESCURO (Dark Mode) --- */
 body.theme-dark {
     --bg: var(--bg-dark);
@@ -295,25 +284,37 @@ h2 {
 
 /* --- BOTÃO iOS --- */
 .ios-button {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    box-shadow: var(--shadow);
+    /* Define o fundo como transparente, integrando-o ao rodapé */
+    background: transparent;
+
+    /* A cor do texto será a cor de destaque (Rosa) */
+    color: var(--accent);
+
+    /* Adiciona uma borda fina e arredondada com a cor de destaque */
+    border: 1px solid var(--accent);
+    border-radius: 8px; /* Arredondamento suave */
+
+    /* Padding discreto */
+    padding: 6px 12px;
+    font-size: 0.85rem; /* Fonte um pouco menor */
+    font-weight: 500; /* Peso da fonte mais leve */
+    margin-bottom: 15px;
+
+    /* Remove qualquer sombra que possa ter sobrado da classe .ios-button */
+    box-shadow: none !important;
+
+    /* Garante que o efeito de clique ainda funcione */
     transition:
         background 0.2s ease,
-        transform 0.1s ease;
+        opacity 0.2s ease;
 }
 
 .ios-button:active {
-    transform: scale(0.98);
-    opacity: 0.85;
+    opacity: 0.7;
 }
-
+.ios-button :hover {
+    background: rgba(255, 51, 102, 0.1); /* Rosa muito claro */
+}
 /* --- RODAPÉ (com BLUR) --- */
 .footer {
     padding: 20px;
