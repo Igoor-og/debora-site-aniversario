@@ -1,169 +1,302 @@
-// =========================================================
-// VARIÁVEIS GLOBAIS
-// =========================================================
-const targetDate = new Date("December 31, 2025 23:59:00").getTime();
-const lockScreen = document.querySelector(".lock-screen-countdown");
-const countdownTimeDisplay = document.getElementById("countdown-time");
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialize AOS Animation Library
+    AOS.init({
+        once: true,
+        offset: 80,
+        easing: 'ease-in-out-cubic',
+    });
 
-// Verifica imediatamente se o parâmetro 'dev=true' está na URL
-const urlParams = new URLSearchParams(window.location.search);
-const isDevMode = urlParams.get("dev") === "true";
+    // 1. Background Floating Hearts
+    const heartsContainer = document.getElementById('hearts-container');
+    const createHeart = () => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = Math.random() * 3 + 6 + 's'; // 6 to 9 seconds
+        heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+        heartsContainer.appendChild(heart);
+        
+        setTimeout(() => {
+            heart.remove();
+        }, 9000);
+    };
+    setInterval(createHeart, 400);
 
-let countdownInterval = null; // Variável para armazenar o ID do intervalo do contador
+    // 2. Audio Player Logic
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
+    let isPlaying = false;
 
-// =========================================================
-// FUNÇÕES PRINCIPAIS
-// =========================================================
+    musicBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        } else {
+            audio.play().catch(e => console.log('Autoplay blocked'));
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        }
+        isPlaying = !isPlaying;
+    });
 
-function updateCountdown() {
-  // Esta função só é chamada se NÃO estivermos no modo DEV
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+    // 3. Dual Count-up Timers
+    const firstDate = new Date("April 21, 2023 00:00:00").getTime();
+    const secondDate = new Date("January 01, 2025 00:00:00").getTime();
+    
+    function updateCounters() {
+        const now = new Date().getTime();
+        
+        // Timer 1 (Desde 21.04.2023)
+        const dist1 = now - firstDate;
+        if (dist1 > 0) {
+            document.getElementById('days1').innerText = Math.floor(dist1 / (1000 * 60 * 60 * 24));
+            document.getElementById('hours1').innerText = Math.floor((dist1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minutes1').innerText = Math.floor((dist1 % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('seconds1').innerText = Math.floor((dist1 % (1000 * 60)) / 1000);
+        }
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-  );
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  const format = (num) => String(num).padStart(2, "0");
-
-  if (distance < 0) {
-    // *** DESBLOQUEIO POR DATA: A data chegou! ***
-    clearInterval(countdownInterval);
-    if (lockScreen) {
-      lockScreen.classList.add("hidden");
+        // Timer 2 (Desde 01.01.2025)
+        const dist2 = now - secondDate;
+        if (dist2 > 0) {
+            document.getElementById('days2').innerText = Math.floor(dist2 / (1000 * 60 * 60 * 24));
+            document.getElementById('hours2').innerText = Math.floor((dist2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minutes2').innerText = Math.floor((dist2 % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('seconds2').innerText = Math.floor((dist2 % (1000 * 60)) / 1000);
+        }
     }
-    countdownTimeDisplay.innerHTML = "É HOJE!"; // 🔑 CHAMA O SWIPER SOMENTE AO DESBLOQUEAR
-    initializeSwiper();
-  } else {
-    // Bloqueio ativo: Atualiza o tempo.
-    countdownTimeDisplay.innerHTML = `${days} dias ${format(hours)}:${format(minutes)}:${format(seconds)}`;
-    if (lockScreen) {
-      lockScreen.classList.remove("hidden");
+    
+    setInterval(updateCounters, 1000);
+    updateCounters();
+
+    // 4. Easter Egg Confetti Logic (Fires when reaching bottom of letter)
+    let confettiFired = false;
+    const trigger = document.getElementById('easter-egg-trigger');
+    
+    if (trigger) {
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting && !confettiFired) {
+                fireConfetti();
+                confettiFired = true;
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+        observer.observe(trigger);
     }
-  }
-}
 
-// =========================================================
-// NOVO BLOCO: INICIALIZAÇÃO DO SWIPER
-// =========================================================
+    function fireConfetti() {
+        var duration = 4 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-function initializeSwiper() {
-  // Garante que o Swiper só inicialize uma vez
-  if (document.querySelector(".mySwiper").swiper) return;
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-  const carouselWrapper = document.getElementById("carousel-wrapper");
-  const totalPhotos = 104; // NÚMERO TOTAL DE FOTOS
-  // 1. Geração Automática dos Slides
+        var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
 
-  if (carouselWrapper) {
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            var particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
+    // 5. Masonry Gallery with Lazy Loading
+    const galleryContainer = document.getElementById('masonry-gallery');
+    const totalPhotos = 104; // As discovered in the original script
+    
     const fragment = document.createDocumentFragment();
-
     for (let i = 1; i <= totalPhotos; i++) {
-      const slide = document.createElement("div");
-      slide.classList.add("swiper-slide");
-
-      const img = document.createElement("img"); // Usa SRC para carregamento imediato (sem lazy loading, conforme configuração)
-      img.setAttribute("src", `assets/photo${i}.jpg`);
-
-      img.alt = `Momento nosso ${i}`;
-
-      slide.appendChild(img);
-      fragment.appendChild(slide);
+        const imgContainer = document.createElement('div');
+        imgContainer.setAttribute('data-aos', 'zoom-in');
+        
+        const img = document.createElement('img');
+        img.dataset.src = `assets/photo${i}.jpg`;
+        img.classList.add('gallery-img');
+        img.alt = `Nosso momento ${i}`;
+        // Native lazy loading for compatible browsers fallback
+        img.loading = "lazy";
+        
+        fragment.appendChild(img);
+    }
+    if (galleryContainer) {
+        galleryContainer.appendChild(fragment);
     }
 
-    carouselWrapper.appendChild(fragment); // 2. Inicialização do Swiper com Configurações
+    const imgObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.onload = () => img.classList.add('loaded');
+                observer.unobserve(img);
+            }
+        });
+    }, { rootMargin: "0px 0px 400px 0px" });
 
-    new Swiper(".mySwiper", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      loop: true,
-      autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-      },
+    document.querySelectorAll('.gallery-img').forEach(img => imgObserver.observe(img));
 
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 1.2,
-        },
-        1024: {
-          slidesPerView: 1.5,
-        },
-      },
-    });
-  }
-}
+    // 6. Mini-Game: Nosso Termooo
+    const targetWord = "AMOR"; 
+    const numRows = 6;
+    let currentRow = 0;
+    let currentCell = 0;
+    let boardState = Array.from({ length: numRows }, () => Array(targetWord.length).fill(''));
+    let gameOver = false;
 
-function initializeApp() {
-  // 1. Lógica do Modo DEV
-  if (isDevMode) {
-    console.log("Modo DEV ativado. Desbloqueando a página.");
-    if (lockScreen) {
-      lockScreen.classList.add("hidden");
-    } // 🔑 NOVO: Inicializa o Swiper imediatamente no modo DEV
-    initializeSwiper();
-  } else {
-    // 2. Lógica do Contador Regressivo (Modo Normal)
-    updateCountdown(); // Chama uma vez para inicializar o display
-    countdownInterval = setInterval(updateCountdown, 1000); // Inicia o loop
-  } // 3. Inicializa Tema (Dark/Light)
+    const board = document.getElementById('term-board');
+    const keyboard = document.getElementById('keyboard');
 
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("theme-dark");
-  }
-}
+    if (board && keyboard) {
+        // Build Board
+        for (let i = 0; i < numRows; i++) {
+            const row = document.createElement('div');
+            row.classList.add('term-row');
+            for (let j = 0; j < targetWord.length; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('term-cell');
+                cell.id = `cell-${i}-${j}`;
+                row.appendChild(cell);
+            }
+            board.appendChild(row);
+        }
 
-// =========================================================
-// EVENT LISTENERS
-// =========================================================
+        // Build Keyboard
+        const keys = [
+            ['Q','W','E','R','T','Y','U','I','O','P'],
+            ['A','S','D','F','G','H','J','K','L'],
+            ['DEL','Z','X','C','V','B','N','M','ENTER']
+        ];
+        
+        keys.forEach(rowKeys => {
+            const row = document.createElement('div');
+            row.classList.add('key-row');
+            rowKeys.forEach(k => {
+                const btn = document.createElement('button');
+                btn.classList.add('key');
+                btn.innerText = k === 'DEL' ? '⌫' : (k === 'ENTER' ? 'OK' : k);
+                btn.dataset.key = k;
+                btn.addEventListener('click', () => handleKey(k));
+                row.appendChild(btn);
+            });
+            keyboard.appendChild(row);
+        });
 
-// Inicia o aplicativo e a lógica de bloqueio assim que o DOM estiver carregado
-window.onload = initializeApp;
+        function handleKey(key) {
+            if (gameOver) return;
 
-// Observer para animações de fade (só funciona se a tela não estiver bloqueada)
-const observer = new IntersectionObserver((entries) => {
-  // A animação só deve ocorrer se a tela estiver desbloqueada (modo DEV ou data alcançada)
-  if (isDevMode || (lockScreen && lockScreen.classList.contains("hidden"))) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        observer.unobserve(entry.target);
-      }
-    });
-  }
+            if (key === 'DEL' || key === 'BACKSPACE') {
+                if (currentCell > 0) {
+                    currentCell--;
+                    boardState[currentRow][currentCell] = '';
+                    updateBoard();
+                }
+            } else if (key === 'ENTER') {
+                if (currentCell === targetWord.length) {
+                    checkWord();
+                } else {
+                    alert('Preencha a palavra completa!');
+                }
+            } else if (currentCell < targetWord.length && /^[A-Z]$/.test(key)) {
+                boardState[currentRow][currentCell] = key;
+                currentCell++;
+                updateBoard();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const k = e.key.toUpperCase();
+            if (k === 'BACKSPACE') handleKey('DEL');
+            else if (k === 'ENTER') handleKey('ENTER');
+            else if (/^[A-Z]$/.test(k)) handleKey(k);
+        });
+
+        function updateBoard() {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < targetWord.length; j++) {
+                    const cell = document.getElementById(`cell-${i}-${j}`);
+                    if (cell) {
+                        cell.innerText = boardState[i][j];
+                        // Add some pop animation
+                        if (boardState[i][j] !== '' && i === currentRow && j === currentCell - 1) {
+                            cell.style.transform = 'scale(1.1)';
+                            setTimeout(() => cell.style.transform = 'scale(1)', 100);
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkWord() {
+            const guess = boardState[currentRow].join('');
+            const answerArr = targetWord.split('');
+            const guessArr = guess.split('');
+            
+            let correctCount = 0;
+            
+            // Mark correct (green)
+            guessArr.forEach((letter, i) => {
+                const cell = document.getElementById(`cell-${currentRow}-${i}`);
+                const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
+                if (letter === answerArr[i]) {
+                    setTimeout(() => {
+                        cell.classList.add('correct');
+                        if(keyBtn) {
+                           keyBtn.style.background = '#a8e6cf';
+                           keyBtn.style.color = '#2b2b2b';
+                        }
+                    }, i * 200);
+                    answerArr[i] = null;
+                    guessArr[i] = null;
+                    correctCount++;
+                }
+            });
+
+            // Mark present (yellow) and absent (gray)
+            guessArr.forEach((letter, i) => {
+                if (letter === null) return; 
+                
+                setTimeout(() => {
+                    const cell = document.getElementById(`cell-${currentRow}-${i}`);
+                    const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
+                    
+                    if (answerArr.includes(letter)) {
+                        cell.classList.add('present');
+                        if(keyBtn && keyBtn.style.background !== 'rgb(168, 230, 207)') { 
+                           keyBtn.style.background = 'var(--gold-light)';
+                           keyBtn.style.color = '#2b2b2b';
+                        }
+                        answerArr[answerArr.indexOf(letter)] = null;
+                    } else {
+                        cell.classList.add('absent');
+                        if(keyBtn && !keyBtn.style.background) {
+                           keyBtn.style.background = '#e0e0e0';
+                        }
+                    }
+                }, i * 200);
+            });
+
+            setTimeout(() => {
+                if (correctCount === targetWord.length) {
+                    gameOver = true;
+                    fireConfetti();
+                    setTimeout(() => alert('Parabéns! Você acertou nossa palavra especial! Te amo! ❤️'), 500);
+                } else if (currentRow === numRows - 1) {
+                    gameOver = true;
+                    setTimeout(() => alert(`Fim de jogo! A palavra era ${targetWord}`), 500);
+                } else {
+                    currentRow++;
+                    currentCell = 0;
+                }
+            }, targetWord.length * 200 + 100);
+        }
+    }
 });
-
-document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
-
-document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("theme-dark");
-  const isDarkMode = document.body.classList.contains("theme-dark");
-  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-});
-
-// Início da música - Não desbloqueia a tela, só permite o som
-document.addEventListener(
-  "click",
-  () => {
-    const audio = document.getElementById("music");
-    audio.muted = false;
-    audio.play().catch((error) => {
-      console.log("Autoplay bloqueado. A música tocará após o desbloqueio.");
-    });
-  },
-  { once: true },
-);
-
-// Remove o bloco DOMContentLoaded antigo do Swiper

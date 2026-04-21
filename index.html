@@ -1,190 +1,211 @@
-<!doctype html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Débora & Igor</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-        />
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body class="ios">
-        <audio id="music" autoplay loop muted>
-            <source src="musica.mp3" type="audio/mpeg" />
-        </audio>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-        <div class="lock-screen-countdown">
-            <h1 id="countdown-date" class="ios-large-title">
-                31 de Dezembro de 2025
-            </h1>
-            <p id="countdown-time" class="ios-clock-time">00:00:00</p>
-            <p class="ios-lock-message">Carregando surpresa...</p>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Débora & Igor - Amor</title>
 
-        <header class="hero">
-            <img src="assets/hero.jpg" class="hero-img" alt="Foto nossa" />
-            <div class="hero-overlay"></div>
-            <div class="hero-text">
-                <h1 class="ios-large-title">
-                    Feliz 1 ano de <span class="ios-accent">Namoro</span>
-                </h1>
-                <p>01/01/2025 Um novo começo.</p>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Hearts Container -->
+    <div id="hearts-container"></div>
+
+    <!-- Music Player Button -->
+    <button id="music-btn" class="glass-btn float-btn">
+        <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M8 5v14l11-7z" />
+        </svg>
+        <svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" style="display:none;">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+        </svg>
+    </button>
+    <audio id="bg-music" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero glass-panel" data-aos="zoom-in" data-aos-duration="1500">
+            <h1 class="title">Débora & Igor</h1>
+            <p class="subtitle">Comemorando nossa jornada e todo o amor que nos une.</p>
+
+            <div class="counters-container">
+                <div class="counter-box" data-aos="fade-right">
+                    <h3 class="counter-title">Nossa Primeira História</h3>
+                    <p class="counter-date">Desde 21 de Abril de 2023</p>
+                    <div class="countdown">
+                        <div class="time-box"><span id="days1">0</span><small>Dias</small></div>
+                        <div class="time-box"><span id="hours1">0</span><small>Hrs</small></div>
+                        <div class="time-box"><span id="minutes1">0</span><small>Min</small></div>
+                        <div class="time-box"><span id="seconds1">0</span><small>Seg</small></div>
+                    </div>
+                </div>
+
+                <div class="counter-box mt-4" data-aos="fade-left">
+                    <h3 class="counter-title">Nosso Recomeço (2º Namoro)</h3>
+                    <p class="counter-date">Desde 01 de Janeiro de 2025</p>
+                    <div class="countdown">
+                        <div class="time-box"><span id="days2">0</span><small>Dias</small></div>
+                        <div class="time-box"><span id="hours2">0</span><small>Hrs</small></div>
+                        <div class="time-box"><span id="minutes2">0</span><small>Min</small></div>
+                        <div class="time-box"><span id="seconds2">0</span><small>Seg</small></div>
+                    </div>
+                </div>
             </div>
-        </header>
+        </section>
 
-        <section class="story ios-card fade">
-            <h2>Nossa História</h2>
+        <!-- Timeline Section -->
+        <section class="timeline-section" data-aos="fade-up">
+            <h2 class="section-title">Nossa História</h2>
             <div class="timeline">
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Contexto</strong> Antes de tudo tivemos nosso
-                        primeiro toque, olhares e conversas vagas naquela festa,
-                        começou a ter conversas por mais tempo e você me
-                        convidou pro seu aniversário, senti o melhor abraço do
-                        mundo... Um dia saimos pro sesc tivemos nosso beijo e
-                        encanto... tiramos fotinhas e inclusive algumas vai
-                        estar ai abaixo, foi momentos incriveis, tivemos algumas
-                        brigas com o tempo, mas você foi paciente e tivemos
-                        varios recomeços (Sem nenhum termino, apenas novas
-                        tentativas de se entendermos), aconteceu muitas coisas,
-                        aprendi muitas coisa e sou muitooo grato por esse tempo
-                        que me ajudou a amadurecer bastante, você mudou minha
-                        forma de ver o mundo e me trouxe novos sonhos. alguns
-                        imprevistos aconteceram e achei que não existiria mais
-                        'NÓS' mas aqui estamos e espero que você esteja gostando
-                        dessa nova chance que tivemos juntos que está de forma
-                        resumida escrita nos próximos pontos, eu te amo meu
-                        amor.
+                <div class="timeline-item glass-panel" data-aos="fade-up">
+                    <h3>O Começo de Tudo</h3>
+                    <p>Antes de tudo tivemos nosso primeiro toque, olhares e conversas vagas naquela festa, começou a
+                        ter conversas por mais tempo e você me convidou pro seu aniversário, senti o melhor abraço do
+                        mundo... Um dia saimos pro sesc tivemos nosso beijo e encanto... tiramos fotinhas e inclusive
+                        algumas vai estar ai abaixo, foi momentos incriveis, tivemos algumas brigas com o tempo, mas
+                        você foi paciente e tivemos varios recomeços (Sem nenhum termino, apenas novas tentativas de se
+                        entendermos), aconteceu muitas coisas, aprendi muitas coisa e sou muitooo grato por esse tempo
+                        que me ajudou a amadurecer bastante, você mudou minha forma de ver o mundo e me trouxe novos
+                        sonhos. alguns imprevistos aconteceram e achei que não existiria mais 'NÓS' mas aqui estamos e
+                        espero que você esteja gostando dessa nova chance que tivemos juntos que está de forma resumida
+                        escrita nos próximos pontos, eu te amo meu amor.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-left">
+                    <h3>01 de Janeiro de 2025</h3>
+                    <p>Ganhei meu beijinho depois de muito esforço.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-right">
+                    <h3>Primeiro encontro marcante</h3>
+                    <p>Sorvetinho no Mexicalleta e depois você ganhou um presentinho 💍.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-left">
+                    <h3>Fevereiro</h3>
+                    <p>Fomos no shopping e comemos aquele sorvete super doce MUUUUUUUUUUUU 🐮.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-right">
+                    <h3>Março</h3>
+                    <p>Se perdemos na vila galvão, fomos pro shopping e teve até a minha foto favorita lá no bosque
+                        maia.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-left">
+                    <h3>Abril</h3>
+                    <p>Teve mais um pouquinho de bosque maia, beijinhos e chuva.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-right">
+                    <h3>Junho & Julho</h3>
+                    <p>Julho: Tivemos só um encontro mas é sempre bom te ver. <br>Junho: Muitos beijos, pizza e nasceu o
+                        mini casal Guinho e Debinha.</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-left">
+                    <h3>Agosto</h3>
+                    <p>Provavelmente o melhor mês de 2025, rolou Hopi Hari, foi muito divertido e nossa foto de banner
+                        que foi na pizzaria (Denovo kkkkkk).</p>
+                </div>
+
+                <div class="timeline-item glass-panel" data-aos="fade-right">
+                    <h3>Setembro & Outubro</h3>
+                    <p>Setembro foi muuuito bom também, teve morango do amor, drink de morango e muito sorvete.
+                        <br>Outubro teve vários momentos bons e shoppingzinho clássico.
                     </p>
                 </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>01 de janeiro de 2025</strong> Ganhei meu
-                        beijinho depois de muito esforço.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong> Primeiro encontro marcante</strong> Sorvetinho
-                        no Mexicalleta e depois você ganhou um presentinho 💍.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong> Fevereiro</strong> Fomos no shopping e comemos
-                        aquele sorvete super doce MUUUUUUUUUUUU 🐮.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong> Março</strong> Se perdemos na vila galvão,
-                        fomos pro shopping e teve até a minha foto favorita lá
-                        no bosque maia.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Abril</strong> Teve mais um pouquinho de bosque
-                        maia, beijinhos e chuva.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Julho</strong> Tivemos só um encontro mas é
-                        sempre bom te ver.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Junho</strong> Muitos beijos, pizza e nasceu o
-                        mini casal Guinho e Debinha.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Agosto</strong> Provavelmente o melhor mês de
-                        2025, rolou Hopi Hari, foi muito divertido e nossa foto
-                        de banner que foi na pizzaria (Denovo kkkkkk)
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Setembro</strong> Esse mês foi muuuito bom
-                        também, teve morango do amor, drink de morango e muito
-                        sorvete.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Outubro</strong> Varios momentos bons e
-                        shoppingzinho clássico.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p>
-                        <strong>Novembro</strong> Eu sai do Barbosa, tivemos
-                        muito mais tempo juntos e foi simplesmente perfeito,
-                        bixinhos de massinha, minha apresentação de violão,
-                        Stranger things e mais.
-                    </p>
-                </div>
-                <div class="event">
-                    <span class="dot"></span>
-                    <p><strong>Dezembro</strong> Falta acabar...</p>
+
+                <div class="timeline-item glass-panel" data-aos="fade-left">
+                    <h3>Novembro</h3>
+                    <p>Eu sai do Barbosa, tivemos muito mais tempo juntos e foi simplesmente perfeito, bixinhos de
+                        massinha, minha apresentação de violão, Stranger things e mais.</p>
                 </div>
             </div>
         </section>
 
-        <section class="gallery ios-card fade">
-            <section class="gallery ios-card fade">
-                <h2>Nossas Fotos</h2>
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper" id="carousel-wrapper">
-                        </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-            </section>
-        <section class="letter ios-card fade">
-            <h2>Cartinha de amor</h2>
-            <p class="typing-text">
-                Débora,<br /><br />
-                Um ano inteiro sem contar nosso tempo de conversa, eu sinto que
-                ao seu lado parece pouco perto do que eu ainda quero viver com
-                você. Obrigado mesmo meu amor pelo carinho, pelo cuidado e até
-                pelas briguinhas, elas mostram que você se importa comigo e com
-                nosso relacionamento. Eu admiro você, sua força de vontade e
-                paciência. Esse site é só um detalhe perto do que você merece,
-                mas fiz com todo meu amor. Tenho muitos planos pra nós espero de
-                verdade que todos eles venham se realizar.
-                <br /><br />
-                — Igor
-            </p>
+        <!-- Commemorative Section -->
+        <section class="commemorative" data-aos="zoom-in-up">
+            <h2 class="section-title">Nossas Declarações</h2>
+            
+            <!-- Carta 1 -->
+            <div class="glass-panel noble-text" style="margin-bottom: 30px;">
+                <p>Débora,</p>
+                <p>1095 Dias desde que você sorriu pra mim e me encheu de beijos... cada sorriso seu foi um meu também. 
+                São mais de MIL dias ao seu lado, eu sei que nem todos foram bons e nem todos estivemos próximos mas, 
+                não deixei de pensar em você em nenhum segundo desde que te tive como minha primeira e única namorada.</p>
+                
+                <p>Pode parecer meio brega mas eu amo cada sensação nova que você me fez sentir, até mesmo a saudade 
+                que acredito que foi a palavra que definiu muito bem o que eu senti quando não estava com você e até hoje só aumenta. 
+                Meus planos contigo continuam sendo os mesmos e cada beijo e abraço ainda tem seu cheiro e calor únicos, 
+                coisas que ninguém consegue me proporcionar além de você...</p>
+                
+                <p>Foram diversas piadas internas, gírias e manias que construímos ao decorrer do tempo que me fazem sorrir até hoje. 
+                Foram cada presente nesse tempo que, apesar de não lembrar de todos, sei que meu maior sorriso era por ser algo seu. 
+                Obrigado por tanto tempo junto e por nunca desistir de nós, admiro você e tudo que você faz.</p>
+                
+                <p>Eu tenho muito orgulho da pessoa que tenho como minha parceira, amiga e namorada. 
+                Ei, eu amo você hoje, ontem, há 3 anos atrás e daqui mil milhões de anos pra frente. ❤️</p>
+                
+                <p class="signature">— Igor 20.04</p>
+            </div>
+
+            <!-- Carta 2 -->
+            <div class="glass-panel noble-text">
+                <p>Débora,</p>
+                <p>Um ano inteiro sem contar nosso tempo de conversa, eu sinto que ao seu lado parece pouco perto do que eu ainda quero viver com você. 
+                Obrigado mesmo meu amor pelo carinho, pelo cuidado e até pelas briguinhas, elas mostram que você se importa comigo e com nosso relacionamento.</p>
+                
+                <p>Eu admiro você, sua força de vontade e paciência. Esse site é só um detalhe perto do que você merece, mas fiz com todo meu amor. 
+                Tenho muitos planos pra nós e espero de verdade que todos eles venham se realizar.</p>
+                
+                <p class="signature">— Igor 03.03</p>
+                <div id="easter-egg-trigger" style="height: 1px; width: 100%;"></div>
+            </div>
         </section>
 
-        <footer class="footer">
+        <!-- Mini-Game Termoo -->
+        <section class="game-section glass-panel" data-aos="flip-up">
+            <h2 class="section-title">Nosso Termooo</h2>
+            <p style="text-align:center; margin-bottom: 20px; font-weight: 500;">Adivinhe a palavra secreta de 4
+                letras!<br><span style="color: var(--rosé);">(Dica: O sentimento mais puro que nos une e nos
+                    move)</span></p>
+            <div id="term-board"></div>
+            <div id="keyboard"></div>
+        </section>
 
-        <button id="themeToggle" class="ios-button">Trocar Tema</button>
-            Feito por Igor, para a mulher da minha vida... +1 ano de história
+        <!-- Gallery Section -->
+        <section class="gallery-section" data-aos="fade-up">
+            <h2 class="section-title">Nossos Momentos</h2>
+            <div class="masonry-gallery" id="masonry-gallery">
+                <!-- JavaScript vai injetar as fotos aqui com lazy loading -->
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: 20px; color: var(--text-light); font-size: 0.9rem;">
+            <p>Feito por Igor, para a mulher da minha vida.</p>
         </footer>
+    </main>
 
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
 
-        <script src="script.js"></script>
-    </body>
 </html>

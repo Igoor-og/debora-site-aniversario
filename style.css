@@ -1,415 +1,378 @@
-/* --- VARIAVEIS GLOBAIS ESTILO IOS --- */
 :root {
-    /* Cores de destaque (iOS Blue/Pink) */
-    --ios-accent: #ff3366; /* Rosa vibrante */
-    --ios-secondary: #007aff; /* Azul típico do iOS para botões */
-    /* Cores do Modo Claro */
-    --bg-light: #f9f9f9;
-    --text-light: #1c1c1e;
-    /* Cards com fundo semi-transparente e desfoque */
-    --card-bg-light: rgba(255, 255, 255, 0.75);
-    --footer-bg-light: rgba(255, 255, 255, 0.95);
-    --shadow-light: 0 1px 4px rgba(0, 0, 0, 0.1);
-
-    /* Cores do Modo Escuro */
-    --bg-dark: #000000;
-    --text-dark: #f2f2f7;
-    /* Cards com fundo semi-transparente e desfoque */
-    --card-bg-dark: rgba(28, 28, 30, 0.8);
-    --footer-bg-dark: rgba(0, 0, 0, 0.95);
-    --shadow-dark: 0 4px 10px rgba(0, 0, 0, 0.5);
-
-    /* Aplica padrão claro por default */
-    --bg: var(--bg-light);
-    --text: var(--text-light);
-    --accent: var(--ios-accent);
-    --card-bg: var(--card-bg-light);
-    --shadow: var(--shadow-light);
-    --footer-bg: var(--footer-bg-light);
-}
-/* --- MODO ESCURO (Dark Mode) --- */
-body.theme-dark {
-    --bg: var(--bg-dark);
-    --text: var(--text-dark);
-    --card-bg: var(--card-bg-dark);
-    --shadow: var(--shadow-dark);
-    --footer-bg: var(--footer-bg-dark);
+    --rosé: #f28b9c; 
+    --rosé-light: #592e35;
+    --pearl: #1a1a1a;
+    --gold: #f9d876;
+    --gold-light: #6a5e31;
+    --text-main: #f0f0f0;
+    --text-light: #b0b0b0;
+    
+    --glass-bg: rgba(20, 20, 25, 0.7);
+    --glass-bd: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
-/* --- ESTILOS GERAIS iOS HIG --- */
-body {
+* {
     margin: 0;
-    font-family:
-        "Inter",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Fira Sans",
-        "Droid Sans",
-        "Helvetica Neue",
-        sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition:
-        background 0.4s ease,
-        color 0.4s ease;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* TÍTULOS */
-h2 {
-    text-align: center;
-    margin-top: 60px;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -0.5px;
-}
-
-/* Estilo Card (inclui o BLUR) */
-.ios-card {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
-    background: var(--card-bg);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    transition:
-        box-shadow 0.4s ease,
-        background 0.4s ease;
-
-    /* PROPRIEDADE BLUR */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 10;
-}
-
-/* --- HERO (Ajuste para visibilidade do texto) --- */
-.hero {
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0d0d12 0%, #1a1014 100%);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
     position: relative;
-    height: 70vh;
-    width: 100%;
-    overflow: hidden;
+    padding-bottom: 50px;
+    scroll-behavior: smooth;
 }
 
-.hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(85%);
-}
-
-.hero-overlay {
-    position: absolute;
+/* Background Hearts */
+#hearts-container {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    /* Garante contraste para o texto */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 50%);
-}
-
-.hero-text {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    width: auto;
-    z-index: 20;
-}
-
-.ios-large-title {
-    font-size: 3.2rem;
-    font-weight: 700;
-    margin: 0;
-    color: white;
-    line-height: 1.1;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.hero-text p {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 5px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.ios-accent {
-    color: var(--accent);
-}
-
-/* --- HISTÓRIA / TIMELINE --- */
-.story h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.6rem;
-    text-align: left;
-    padding-left: 10px;
-}
-
-.timeline {
-    border-left: 2px solid var(--accent);
-    margin: 20px 0;
-    padding-left: 20px;
-}
-
-.event {
-    margin-bottom: 20px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.1);
-    position: relative;
-}
-
-.dot {
-    position: absolute;
-    left: -11px;
-    top: 6px;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.event strong {
-    color: var(--accent);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-}
-
-.event p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: var(--text);
-}
-
-/* --- GALERIA --- */
-
-.gallery {
-    margin-bottom: 20px;
-    padding-left: 10px;
-    text-align: left;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
     overflow: hidden;
-    position: relative;
-    z-index: 10;
+}
+.heart {
+    position: absolute;
+    bottom: -100px;
+    font-size: 20px;
+    color: rgba(232, 180, 184, 0.5);
+    animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
 
-.swiper.mySwiper {
-    width: 90%;
-    max-width: 500px;
-    height: auto;
-    margin: 30px auto;
-    padding-bottom: 40px;
-    overflow: visible;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* 2. Estilo de cada slide individual (Onde definimos o formato) */
-.swiper-slide {
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-bd);
+    box-shadow: var(--glass-shadow);
+    border-radius: 24px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+/* Floating Audio Btn */
+.float-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    color: var(--gold);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-bd);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+    transition: transform 0.3s ease;
+}
+.float-btn:active {
+    transform: scale(0.9);
+}
+
+/* Typography */
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--rosé);
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Counters container */
+.counters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+.counter-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.counter-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+.counter-date {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--rosé-light);
+    margin-bottom: 15px;
+}
+
+/* Countdown */
+.countdown {
     display: flex;
     justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.time-box {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    background: var(--card-bg);
-    border-radius: 20px; /* Arredondamento um pouco maior fica mais bonito no quadrado */
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais suave */
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    aspect-ratio: 1 / 1;
-
-    /* DICA: Se você tiver muitas fotos "em pé" (retrato) e o quadrado ainda estiver
-       cortando muito o topo/base, troque a linha acima por:
-       aspect-ratio: 4 / 5;  (Formato retrato estilo Instagram)
-    */
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 16px;
+    min-width: 75px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.02);
 }
-
-/* 3. Imagem dentro do slide */
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    /*
-       object-fit: cover; -> Preenche todo o quadrado. Fica mais bonito, mas corta as bordas se a foto não for quadrada.
-       object-fit: contain; -> Mostra a foto INTEIRA sem cortar nada, mas pode sobrar espaço vazio dentro do quadrado.
-       Sugiro manter 'cover' para ficar mais elegante, o formato quadrado já reduzirá muito os cortes.
-    */
-    object-fit: cover;
-    opacity: 1;
-    border-radius: 20px; /* Garante que a imagem siga o arredondamento do card */
+.time-box span {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--rosé);
 }
-
-.swiper-slide img.swiper-lazy-loaded {
-    opacity: 1;
+.time-box small {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
 }
-
-/* --- ESTILO DOS CONTROLES --- */
-:root {
-    /* Define a cor dos botões e paginação como seu accent color */
-    --swiper-theme-color: var(--ios-accent);
-}
-
-/* Opcional: Estilo das setas */
-.swiper-button-next,
-.swiper-button-prev {
-    opacity: 0.8;
-}
-
-.swiper-button-next:after,
-.swiper-button-prev:after {
-    font-size: 20px !important;
-    font-weight: bold;
-}
-
-/* --- CARTA --- */
-.letter {
-    padding: 30px;
-}
-
-.letter h2 {
+.target-date {
     text-align: center;
-}
-
-.typing-text {
     font-size: 1.1rem;
-    line-height: 1.6;
-    font-weight: 500;
-    white-space: pre-line;
+    color: var(--text-main);
+    font-weight: 600;
 }
 
-/* --- BOTÃO iOS --- */
-.ios-button {
-    /* Define o fundo como transparente, integrando-o ao rodapé */
-    background: transparent;
-
-    /* A cor do texto será a cor de destaque (Rosa) */
-    color: var(--accent);
-
-    /* Adiciona uma borda fina e arredondada com a cor de destaque */
-    border: 1px solid var(--accent);
-    border-radius: 8px; /* Arredondamento suave */
-
-    /* Padding discreto */
-    padding: 6px 12px;
-    font-size: 0.85rem; /* Fonte um pouco menor */
-    font-weight: 500; /* Peso da fonte mais leve */
-    margin-bottom: 15px;
-
-    /* Remove qualquer sombra que possa ter sobrado da classe .ios-button */
-    box-shadow: none !important;
-
-    /* Garante que o efeito de clique ainda funcione */
-    transition:
-        background 0.2s ease,
-        opacity 0.2s ease;
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
 }
-
-.ios-button:active {
-    opacity: 0.7;
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rosé-light);
 }
-.ios-button :hover {
-    background: rgba(255, 51, 102, 0.1); /* Rosa muito claro */
-}
-/* --- RODAPÉ (com BLUR) --- */
-.footer {
+.timeline-item {
+    position: relative;
+    padding-left: 50px !important;
     padding: 20px;
-    background: var(--footer-bg);
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.85rem;
-    text-align: center;
-    margin-top: 50px;
-
-    /* BLUR APLICADO */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.2);
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 30px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px var(--bg-main);
+}
+.timeline-item h3 {
+    color: var(--rosé);
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+}
+.timeline-item p {
+    line-height: 1.6;
+    color: var(--text-main);
+    font-size: 0.95rem;
 }
 
-/* --- ANIMAÇÕES --- */
-.fade {
+/* Noble Text */
+.noble-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: justify;
+    padding: 10px;
+    position: relative;
+}
+.noble-text p {
+    margin-bottom: 20px;
+}
+.signature {
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--gold);
+    margin-top: 40px;
+    font-size: 1.4rem;
+}
+
+/* Game Termooo */
+#term-board {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.term-row {
+    display: flex;
+    gap: 8px;
+}
+.term-cell {
+    width: 55px;
+    height: 55px;
+    border: 2px solid var(--rosé-light);
+    border-radius: 12px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+.term-cell.correct {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+    transform: scale(1.05);
+}
+.term-cell.present {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    color: #fff;
+    transform: scale(1.05);
+}
+.term-cell.absent {
+    background: #333333;
+    border-color: #333333;
+    color: #7a7a7a;
+}
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    max-width: 100%;
+}
+.key-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    width: 100%;
+}
+.key {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-bd);
+    border-radius: 8px;
+    padding: 14px 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    min-width: 32px;
+    text-align: center;
+    touch-action: manipulation;
+    flex: 1;
+    max-width: 45px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.1s;
+}
+.key[data-key="ENTER"], .key[data-key="DEL"] {
+    max-width: 65px;
+    font-size: 0.8rem;
+}
+.key:active {
+    background: var(--rosé-light);
+    transform: translateY(2px);
+}
+
+/* Masonry Gallery */
+.masonry-gallery {
+    column-count: 2;
+    column-gap: 15px;
+}
+.gallery-img {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: block;
     opacity: 0;
     transform: translateY(20px);
-    transition: 0.6s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    background-color: rgba(255,255,255,0.4);
+    min-height: 100px;
 }
-
-.show {
+.gallery-img.loaded {
     opacity: 1;
     transform: translateY(0);
 }
 
-@media (max-width: 480px) {
-    .ios-large-title {
-        font-size: 2.5rem;
+@media (min-width: 768px) {
+    .masonry-gallery {
+        column-count: 3;
+    }
+    .time-box {
+        min-width: 90px;
+    }
+    .term-cell {
+        width: 65px;
+        height: 65px;
+        font-size: 2rem;
     }
 }
-
-/* --- COUNTDOWN ESTILO iOS (TELA DE BLOQUEIO) --- */
-.lock-screen-countdown {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg); /* Usa a cor de fundo do tema */
-    color: var(--text);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 999; /* Fica acima de TUDO (exceto o botão de tema) */
-    transition: opacity 1s ease; /* Transição suave ao desbloquear */
-}
-
-/* Classe para ocultar (será adicionada APENAS pelo JavaScript no dia) */
-.lock-screen-countdown.hidden {
-    opacity: 0;
-    /* Essencial: impede que o usuário interaja com a tela de bloqueio depois de oculta */
-    pointer-events: none;
-}
-
-/* Data (título grande) */
-.lock-screen-countdown .ios-large-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text);
-    text-shadow: none;
-    margin-bottom: 5px;
-}
-
-/* Relógio (fonte maior e mais fina) */
-.ios-clock-time {
-    font-family: "Inter", sans-serif;
-    font-size: 5rem;
-    font-weight: 200; /* Mais fino, como o relógio iOS */
-    margin: 0;
-    line-height: 1;
-    color: var(--text);
-}
-
-/* Mensagem de deslizar (subtexto) */
-.ios-lock-message {
-    position: absolute;
-    bottom: 10vh;
-    font-size: 1rem;
-    color: #8a8a8e;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        opacity: 0.5;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.5;
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
     }
 }
